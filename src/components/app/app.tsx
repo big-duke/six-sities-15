@@ -7,24 +7,26 @@ import OfferScreen from '../../pages/offer-screen/offer-screen';
 import PageNotFoundScreen from '../../pages/page-not-found-screen/page-not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
+import { Offers } from '../../types/offer';
 type AppProps = {
-  placeCardsCount: number;
+  offers: Offers;
 };
-function App({ placeCardsCount }: AppProps): JSX.Element {
+function App({ offers }: AppProps): JSX.Element {
+  const favOffers = offers.filter(({ isFavorite }) => isFavorite);
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainScreen placeCardsCount={placeCardsCount} />}
+            element={<MainScreen offers={offers} />}
           />
           <Route path={AppRoute.Login} element={<LoginScreen />} />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authStatus={AuthStatus.NoAuth}>
-                <FavoritesScreen />
+              <PrivateRoute authStatus={AuthStatus.Auth}>
+                <FavoritesScreen offers={favOffers} />
               </PrivateRoute>
             }
           />
