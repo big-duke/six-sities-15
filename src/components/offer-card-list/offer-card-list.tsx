@@ -12,7 +12,7 @@ function OfferCardList({ offers }: OfferCardListProps) {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => (
-        <OfferCard key={offer.id} offer={offer} onCardHover={handleHoverCard} />
+        <OfferCard key={offer.id} offer={offer} onCardHover={handleHoverCard} variant='card' />
       ))}
     </div>
   );

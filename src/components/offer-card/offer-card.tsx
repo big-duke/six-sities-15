@@ -5,36 +5,36 @@ import PremiumLabel from '../premium-label/premium-label';
 import OfferRating from '../offer-rating/offer-rating';
 import OfferPrice from '../offer-price/offer-price';
 import OfferBookmarkButton from '../offer-bookmark-button/offer-bookmark-button';
+import classNames from 'classnames';
+import { useOfferCard } from './useOfferCard';
+
+export type OfferVariant = 'favorite'| 'card'
 
 type OfferCardProps = {
   offer: Offer;
-  onCardHover: (id: string | null) => void;
+  variant: OfferVariant;
+  onCardHover?: (id: string | null) => void;
 };
-function OfferCard({ offer, onCardHover }: OfferCardProps): JSX.Element {
-  const { isPremium, previewImage, price, title, type, rating, id, isFavorite } = offer;
 
-  const url = generatePath(AppRoute.Offer, { id });
-  const handleOnMouseEnter = () => onCardHover(id);
-  const handleOnMouseLeave = () => onCardHover(null);
+
+
+function OfferCard({ offer, variant, onCardHover }: OfferCardProps): JSX.Element {
+  const { isPremium, previewImage, price, title, type, rating, id, isFavorite } = offer;
+  const {imgSize, url, config} = useOfferCard({id,variant, onCardHover});
   return (
-    <article
-      className="cities__card place-card"
-      onMouseEnter={handleOnMouseEnter}
-      onMouseLeave={handleOnMouseLeave}
-    >
+    <article {...config}>
       <PremiumLabel isPremium={isPremium} variant="card" />
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={classNames('place-card__image-wrapper', variant === 'card' ? 'cities__image-wrapper' : 'favorites__image-wrapper')}>
         <Link to={url}>
           <img
             className="place-card__image"
             src={previewImage}
-            width={260}
-            height={200}
-            alt="Place image"
+            alt={title}
+            {...imgSize}
           />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={classNames('place-card__info', {'favorites__card-info':variant === 'favorite'})} >
         <div className="place-card__price-wrapper">
           <OfferPrice price={price} variant="card" />
           <OfferBookmarkButton isFavorite={isFavorite} variant="card" />
