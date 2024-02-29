@@ -1,10 +1,18 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import classNames from 'classnames';
 
-function Logo() {
+type LogoProps = {
+  isActive?: boolean;
+};
+function Logo({ isActive }: LogoProps) {
+  const className = classNames('header__logo-link', { 'header__logo-link--active': isActive })
   return (
     <div className="header__left">
-      <Link className="header__logo-link" to={AppRoute.Main}>
+      <Link
+        className={className}
+        to={AppRoute.Main}
+      >
         <img
           className="header__logo"
           src="img/logo.svg"

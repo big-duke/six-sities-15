@@ -7,6 +7,10 @@ import OfferFeatures from '../../components/offer-features/offer-features';
 import OfferInside from '../../components/offer-inside/offer-inside';
 import OfferHost from '../../components/offer-host/offer-host';
 import CommentForm from '../../components/comment-form/comment-form';
+import PremiumLabel from '../../components/premium-label/premium-label';
+import OfferRating from '../../components/offer-rating/offer-rating';
+import OfferPrice from '../../components/offer-price/offer-price';
+import OfferBookmarkButton from '../../components/offer-bookmark-button/offer-bookmark-button';
 
 function OfferScreen(): JSX.Element {
   const { id } = useParams();
@@ -27,8 +31,9 @@ function OfferScreen(): JSX.Element {
     rating,
     title,
     type,
+    isFavorite
   } = offer;
-  const width = `${Math.round(rating * 20)}%`;
+
   return (
     <div className="page">
       <Helmet>
@@ -67,36 +72,18 @@ function OfferScreen(): JSX.Element {
           <OfferGallery title={title} images={images} />
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {isPremium && (
-                <div className="offer__mark">
-                  <span>Premium</span>
-                </div>
-              )}
+              <PremiumLabel isPremium={isPremium} variant="full" />
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{title}</h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width={31} height={33}>
-                    <use xlinkHref="#icon-bookmark" />
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <OfferBookmarkButton isFavorite={isFavorite} variant="full" />
               </div>
-              <div className="offer__rating rating">
-                <div className="offer__stars rating__stars">
-                  <span style={{ width }} />
-                  <span className="visually-hidden">Rating</span>
-                </div>
-                <span className="offer__rating-value rating__value">{rating}</span>
-              </div>
+              <OfferRating rating={rating} variant="full" />
               <OfferFeatures
                 bedrooms={bedrooms}
                 maxAdults={maxAdults}
                 type={type}
               />
-              <div className="offer__price">
-                <b className="offer__price-value">€{price}</b>
-                <span className="offer__price-text">&nbsp;night</span>
-              </div>
+              <OfferPrice price={price} variant="full" />
               <OfferInside goods={goods} />
               <OfferHost host={host} description={description} />
               <section className="offer__reviews reviews">

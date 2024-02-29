@@ -1,20 +1,28 @@
 import { Link, generatePath } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import { AppRoute } from '../../const';
+import PremiumLabel from '../premium-label/premium-label';
+import OfferRating from '../offer-rating/offer-rating';
+import OfferPrice from '../offer-price/offer-price';
+import OfferBookmarkButton from '../offer-bookmark-button/offer-bookmark-button';
 type FavoriteOfferCardProps = {
   offer: Offer;
 };
 function FavoriteOfferCard({ offer }: FavoriteOfferCardProps) {
-  const { previewImage, price, rating, type, title, isPremium, id } = offer;
-  const width = `${Math.round(rating * 20)}%`;
+  const {
+    previewImage,
+    price,
+    rating,
+    type,
+    title,
+    isPremium,
+    isFavorite,
+    id,
+  } = offer;
   const url = generatePath(AppRoute.Offer, { id });
   return (
     <article className="favorites__card place-card">
-      {isPremium && (
-        <div className="place-card__mark">
-          <span>Premium</span>
-        </div>
-      )}
+      <PremiumLabel isPremium={isPremium} variant="card" />
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={url}>
           <img
@@ -28,26 +36,10 @@ function FavoriteOfferCard({ offer }: FavoriteOfferCardProps) {
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
-          <div className="place-card__price">
-            <b className="place-card__price-value">€{price}</b>
-            <span className="place-card__price-text">/&nbsp;night</span>
-          </div>
-          <button
-            className="place-card__bookmark-button place-card__bookmark-button--active button"
-            type="button"
-          >
-            <svg className="place-card__bookmark-icon" width={18} height={19}>
-              <use xlinkHref="#icon-bookmark" />
-            </svg>
-            <span className="visually-hidden">In bookmarks</span>
-          </button>
+          <OfferPrice price={price} variant="card" />
+          <OfferBookmarkButton isFavorite={isFavorite} variant="card" />
         </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{ width }} />
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
+        <OfferRating rating={rating} variant="card" />
         <h2 className="place-card__name">
           <Link to={url}>{title}</Link>
         </h2>
