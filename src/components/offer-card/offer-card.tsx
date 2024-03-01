@@ -1,5 +1,4 @@
-import { Link, generatePath } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import PremiumLabel from '../premium-label/premium-label';
 import OfferRating from '../offer-rating/offer-rating';
@@ -17,12 +16,11 @@ type OfferCardProps = {
 };
 
 
-
 function OfferCard({ offer, variant, onCardHover }: OfferCardProps): JSX.Element {
   const { isPremium, previewImage, price, title, type, rating, id, isFavorite } = offer;
-  const {imgSize, url, config} = useOfferCard({id,variant, onCardHover});
+  const {width,heigth, url, className, onMouseEnter, onMouseLeave} = useOfferCard({id,variant, onCardHover});
   return (
-    <article {...config}>
+    <article className={className}>
       <PremiumLabel isPremium={isPremium} variant="card" />
       <div className={classNames('place-card__image-wrapper', variant === 'card' ? 'cities__image-wrapper' : 'favorites__image-wrapper')}>
         <Link to={url}>
@@ -30,7 +28,11 @@ function OfferCard({ offer, variant, onCardHover }: OfferCardProps): JSX.Element
             className="place-card__image"
             src={previewImage}
             alt={title}
-            {...imgSize}
+            width={width}
+            height={heigth}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+
           />
         </Link>
       </div>
