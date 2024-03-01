@@ -4,12 +4,20 @@ import OfferCardList from '../../components/offer-card-list/offer-card-list';
 import { Offers } from '../../types/offer';
 import { AppRoute } from '../../const';
 import { Helmet } from 'react-helmet-async';
+import Map from '../../components/map/map';
+import { Location } from '../../types/location';
 
 type MainScreenProps = {
   offers: Offers;
 };
 
 function MainScreen({ offers }: MainScreenProps): JSX.Element {
+  const points = offers.map(({ location }) => location);
+  const center: Location = {
+    latitude: 52.37454,
+    longitude: 4.897976,
+    zoom: 12,
+  };
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -18,7 +26,7 @@ function MainScreen({ offers }: MainScreenProps): JSX.Element {
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
-            <Logo isActive/>
+            <Logo isActive />
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
@@ -115,7 +123,7 @@ function MainScreen({ offers }: MainScreenProps): JSX.Element {
               <OfferCardList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <Map points={points} center={center} />
             </div>
           </div>
         </div>

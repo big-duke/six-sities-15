@@ -1,20 +1,10 @@
-import { useState } from 'react';
 import InputRating from '../input-rating/input-rating';
-
-const MIN_COMMENT_LENGTH = 50;
-const MAX_COMMENT_LENGTH = 300;
+import { useCommentForm } from './useCommentForm';
 
 
 function CommentForm() {
-  const [comment, setComment] = useState('');
-  const [rating, setRating] = useState(NaN);
-  const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) =>
-    setComment(event.target.value);
+  const { comment, handleCommentChange, handleRateChange, isSubmitDisabled, rating} = useCommentForm();
 
-  const handleRateChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setRating(Number(event.currentTarget.value));
-
-  const isSubmitDisabled = Number.isNaN(rating) || comment.length < MIN_COMMENT_LENGTH || comment.length > MAX_COMMENT_LENGTH;
   return (
     <form className="reviews__form form">
       <label className="reviews__label form__label" htmlFor="review">

@@ -3,7 +3,11 @@ import { AppRoute } from '../../const';
 import { OfferVariant } from './offer-card';
 import classNames from 'classnames';
 
-type CardImgSize = Record<OfferVariant, { width: number; height: number }>;
+const variantConfig: Record<OfferVariant, { width: number; height: number }> = {
+  card: { width: 260, height: 200 },
+  favorite: { width: 150, height: 110 },
+};
+
 
 type OfferCardController = {
   variant: OfferVariant;
@@ -11,21 +15,10 @@ type OfferCardController = {
   onCardHover?: (id: string | null) => void;
 };
 
-export function useOfferCard({
-  id,
-  variant,
-  onCardHover,
-}: OfferCardController) {
-  let width: number;
-  let heigth: number;
+export function useOfferCard({ id, variant, onCardHover}: OfferCardController) {
 
-  if (variant === 'card') {
-    width = 260;
-    heigth = 200;
-  } else {
-    width = 150;
-    heigth = 110;
-  }
+  const variantData = variantConfig[variant];
+  const {width, height} = variantData;
 
   const url = generatePath(AppRoute.Offer, { id });
 
@@ -37,5 +30,5 @@ export function useOfferCard({
   const onMouseEnter = () => onCardHover?.(id);
   const onMouseLeave = () => onCardHover?.(null);
 
-  return { width, heigth, url, className, onMouseEnter, onMouseLeave };
+  return { width, height, url, className, onMouseEnter, onMouseLeave };
 }

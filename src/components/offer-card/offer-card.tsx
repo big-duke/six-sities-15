@@ -6,6 +6,7 @@ import OfferPrice from '../offer-price/offer-price';
 import OfferBookmarkButton from '../offer-bookmark-button/offer-bookmark-button';
 import classNames from 'classnames';
 import { useOfferCard } from './useOfferCard';
+import './styles.css';
 
 export type OfferVariant = 'favorite'| 'card'
 
@@ -18,7 +19,7 @@ type OfferCardProps = {
 
 function OfferCard({ offer, variant, onCardHover }: OfferCardProps): JSX.Element {
   const { isPremium, previewImage, price, title, type, rating, id, isFavorite } = offer;
-  const {width,heigth, url, className, onMouseEnter, onMouseLeave} = useOfferCard({id,variant, onCardHover});
+  const {url, className, onMouseEnter, onMouseLeave} = useOfferCard({id,variant, onCardHover});
   return (
     <article className={className}>
       <PremiumLabel isPremium={isPremium} variant="card" />
@@ -28,11 +29,8 @@ function OfferCard({ offer, variant, onCardHover }: OfferCardProps): JSX.Element
             className="place-card__image"
             src={previewImage}
             alt={title}
-            width={width}
-            height={heigth}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-
           />
         </Link>
       </div>
