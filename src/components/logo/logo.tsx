@@ -6,7 +6,7 @@ type LogoProps = {
   isActive?: boolean;
 };
 function Logo({ isActive }: LogoProps) {
-  const className = classNames('header__logo-link', { 'header__logo-link--active': isActive })
+  const className = classNames('header__logo-link', { 'header__logo-link--active': isActive });
   return (
     <div className="header__left">
       <Link
