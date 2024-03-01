@@ -19,7 +19,11 @@ type OfferCardProps = {
 
 function OfferCard({ offer, variant, onCardHover }: OfferCardProps): JSX.Element {
   const { isPremium, previewImage, price, title, type, rating, id, isFavorite } = offer;
+<<<<<<< HEAD
   const {url, className, onMouseEnter, onMouseLeave} = useOfferCard({id,variant, onCardHover});
+=======
+  const {width,heigth, url, className, onMouseEnter, onMouseLeave} = useOfferCard({id,variant, onCardHover});
+>>>>>>> b5aec34 (рефакторинг компонентов - 3)
   return (
     <article className={className}>
       <PremiumLabel isPremium={isPremium} variant="card" />
@@ -29,8 +33,16 @@ function OfferCard({ offer, variant, onCardHover }: OfferCardProps): JSX.Element
             className="place-card__image"
             src={previewImage}
             alt={title}
+<<<<<<< HEAD
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
+=======
+            width={width}
+            height={heigth}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+
+>>>>>>> b5aec34 (рефакторинг компонентов - 3)
           />
         </Link>
       </div>
