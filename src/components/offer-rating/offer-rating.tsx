@@ -1,34 +1,18 @@
-type OfferRatingProps ={
-  rating:number;
-  variant: 'full'| 'card';
-}
-function OfferRating({rating, variant}:OfferRatingProps) {
-  const width = `${Math.round(rating * 20)}%`;
+import classNames from 'classnames';
+import { useOfferRating } from './use-offer-rating';
+import { OfferRatingProps } from './types';
 
-  if (variant === 'card') {
-    return (
-      <div className="place-card__rating rating">
-        <div className="place-card__stars rating__stars">
-          <span style={{ width }} />
-          <span className="visually-hidden">Rating</span>
-        </div>
+function OfferRating({ rating, variant, children }: OfferRatingProps) {
+  const {ratingClassName, starClassName, width} = useOfferRating({rating, variant});
+  return (
+    <div className={classNames(ratingClassName, 'rating')}>
+      <div className={classNames(starClassName, 'rating__stars')}>
+        <span style={{ width }} />
+        <span className="visually-hidden">Rating</span>
       </div>
-    );
-  }
-
-  if (variant === 'full') {
-    return (
-      <div className="offer__rating rating">
-        <div className="offer__stars rating__stars">
-          <span style={{ width }} />
-          <span className="visually-hidden">Rating</span>
-        </div>
-        <span className="offer__rating-value rating__value">
-          {rating}
-        </span>
-      </div>
-    );
-  }
+      {children}
+    </div>
+  );
 }
 
 export default OfferRating;

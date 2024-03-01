@@ -9,11 +9,7 @@ type OfferCardController = {
   onCardHover?: (id: string | null) => void;
 };
 
-export function useOfferCard({
-  id,
-  variant,
-  onCardHover,
-}: OfferCardController) {
+export function useOfferCard({ id, variant, onCardHover,}: OfferCardController) {
   let width: number;
   let height: number;
 
@@ -27,13 +23,10 @@ export function useOfferCard({
 
   const url = generatePath(AppRoute.Offer, { id });
 
-  const className = classNames(
-    variant === 'card' ? 'cities__card' : 'favorites__card',
-    'place-card'
-  );
+  const className = classNames(variant === 'card' ? 'cities__card' : 'favorites__card', 'place-card');
 
   const onMouseEnter = () => onCardHover?.(id);
   const onMouseLeave = () => onCardHover?.(null);
 
-  return { width, heigth: height, url, className, onMouseEnter, onMouseLeave };
+  return { width, height, url, className, onMouseEnter, onMouseLeave };
 }

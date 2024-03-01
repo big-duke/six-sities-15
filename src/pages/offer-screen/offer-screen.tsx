@@ -6,11 +6,14 @@ import OfferGallery from '../../components/offer-gallery/offer-gallery';
 import OfferFeatures from '../../components/offer-features/offer-features';
 import OfferInside from '../../components/offer-inside/offer-inside';
 import OfferHost from '../../components/offer-host/offer-host';
-import CommentForm from '../../components/comment-form/comment-form';
 import PremiumLabel from '../../components/premium-label/premium-label';
 import OfferRating from '../../components/offer-rating/offer-rating';
 import OfferPrice from '../../components/offer-price/offer-price';
 import OfferBookmarkButton from '../../components/offer-bookmark-button/offer-bookmark-button';
+import ReviewList from '../../components/review-list/review-list';
+import { comments } from '../../mock/comments';
+import Map from '../../components/map/map';
+import { Location } from '../../types/location';
 
 function OfferScreen(): JSX.Element {
   const { id } = useParams();
@@ -31,9 +34,16 @@ function OfferScreen(): JSX.Element {
     rating,
     title,
     type,
-    isFavorite
+    isFavorite,
   } = offer;
 
+  const nearByOffers = offers.filter((item) => item.id !== id);
+  const nearByPoints = nearByOffers.map((item) => item.location);
+  const center: Location = {
+    latitude: 52.37454,
+    longitude: 4.897976,
+    zoom: 12,
+  };
   return (
     <div className="page">
       <Helmet>
@@ -86,47 +96,11 @@ function OfferScreen(): JSX.Element {
               <OfferPrice price={price} variant="full" />
               <OfferInside goods={goods} />
               <OfferHost host={host} description={description} />
-              <section className="offer__reviews reviews">
-                <h2 className="reviews__title">
-                  Reviews · <span className="reviews__amount">1</span>
-                </h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img
-                          className="reviews__avatar user__avatar"
-                          src="img/avatar-max.jpg"
-                          width={54}
-                          height={54}
-                          alt="Reviews avatar"
-                        />
-                      </div>
-                      <span className="reviews__user-name">Max</span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{ width: '80%' }} />
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        A quiet cozy and picturesque that hides behind a a river
-                        by the unique lightness of Amsterdam. The building is
-                        green and from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">
-                        April 2019
-                      </time>
-                    </div>
-                  </li>
-                </ul>
-                <CommentForm />
-              </section>
+              <ReviewList list={comments} />
             </div>
           </div>
-          <section className="offer__map map" />
+          <Map points={nearByPoints} center={center} variant='offer'/>
+
         </section>
         <div className="container">
           <section className="near-places places">

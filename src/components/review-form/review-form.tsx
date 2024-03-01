@@ -1,18 +1,8 @@
-<<<<<<< HEAD
 import InputRating from '../input-rating/input-rating';
-import { useCommentForm } from './useCommentForm';
+import { useReviewForm } from './useReviewForm';
 
-=======
-import { useState } from 'react';
-import InputRating from '../input-rating/input-rating';
-
-const MIN_COMMENT_LENGTH = 50;
-const MAX_COMMENT_LENGTH = 300;
->>>>>>> b5aec34 (рефакторинг компонентов - 3)
-
-
-function CommentForm() {
-  const { comment, handleCommentChange, handleRateChange, isSubmitDisabled, rating} = useCommentForm();
+function ReviewForm() {
+  const { comment, handleCommentChange, handleRateChange, isSubmitDisabled, rating} = useReviewForm();
 
   return (
     <form className="reviews__form form">
@@ -47,4 +37,4 @@ function CommentForm() {
   );
 }
 
-export default CommentForm;
+export default ReviewForm;

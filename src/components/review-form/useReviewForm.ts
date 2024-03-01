@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const MIN_COMMENT_LENGTH = 50;
 const MAX_COMMENT_LENGTH = 300;
-export function useCommentForm() {
+export function useReviewForm() {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(NaN);
   const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) =>

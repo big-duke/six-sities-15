@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import { useOfferCard } from './useOfferCard';
 import './styles.css';
 
-export type OfferVariant = 'favorite'| 'card'
+export type OfferVariant = 'favorite' | 'card' | 'near-places';
 
 type OfferCardProps = {
   offer: Offer;
@@ -16,37 +16,53 @@ type OfferCardProps = {
   onCardHover?: (id: string | null) => void;
 };
 
+function OfferCard({
+  offer,
+  variant,
+  onCardHover,
+}: OfferCardProps): JSX.Element {
+  const {
+    isPremium,
+    previewImage,
+    price,
+    title,
+    type,
+    rating,
+    id,
+    isFavorite,
+  } = offer;
 
-function OfferCard({ offer, variant, onCardHover }: OfferCardProps): JSX.Element {
-  const { isPremium, previewImage, price, title, type, rating, id, isFavorite } = offer;
-<<<<<<< HEAD
-  const {url, className, onMouseEnter, onMouseLeave} = useOfferCard({id,variant, onCardHover});
-=======
-  const {width,heigth, url, className, onMouseEnter, onMouseLeave} = useOfferCard({id,variant, onCardHover});
->>>>>>> b5aec34 (рефакторинг компонентов - 3)
+  const { url, width, height, className, onMouseEnter, onMouseLeave } =
+    useOfferCard({ id, variant, onCardHover });
+
   return (
     <article className={className}>
       <PremiumLabel isPremium={isPremium} variant="card" />
-      <div className={classNames('place-card__image-wrapper', variant === 'card' ? 'cities__image-wrapper' : 'favorites__image-wrapper')}>
+      <div
+        className={classNames(
+          'place-card__image-wrapper',
+          variant === 'card'
+            ? 'cities__image-wrapper'
+            : 'favorites__image-wrapper'
+        )}
+      >
         <Link to={url}>
           <img
             className="place-card__image"
             src={previewImage}
             alt={title}
-<<<<<<< HEAD
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-=======
             width={width}
-            height={heigth}
+            height={height}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-
->>>>>>> b5aec34 (рефакторинг компонентов - 3)
           />
         </Link>
       </div>
-      <div className={classNames('place-card__info', {'favorites__card-info':variant === 'favorite'})} >
+      <div
+        className={classNames('place-card__info', {
+          'favorites__card-info': variant === 'favorite',
+        })}
+      >
         <div className="place-card__price-wrapper">
           <OfferPrice price={price} variant="card" />
           <OfferBookmarkButton isFavorite={isFavorite} variant="card" />

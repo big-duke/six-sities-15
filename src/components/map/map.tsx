@@ -4,12 +4,13 @@ import 'leaflet/dist/leaflet.css';
 
 import { Location } from '../../types/location';
 import { useMap } from './use-map';
-
+import './styles.css';
 type MapProps = {
   center: Location;
   points: Location[];
+  variant: 'cities' | 'offer';
 };
-function Map({ center, points }: MapProps) {
+function Map({ center, points , variant}: MapProps) {
   const mapRef = useRef(null);
   const map = useMap({mapRef, center});
 
@@ -28,7 +29,7 @@ function Map({ center, points }: MapProps) {
     }
   }, [map, points]);
 
-  return <section className="cities__map map" ref={mapRef}/>;
+  return <section className={`${variant}__map map`} ref={mapRef}/>;
 }
 
 export default Map;

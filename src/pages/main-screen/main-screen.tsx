@@ -123,7 +123,7 @@ function MainScreen({ offers }: MainScreenProps): JSX.Element {
               <OfferCardList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <Map points={points} center={center} />
+              <Map points={points} center={center} variant='cities' />
             </div>
           </div>
         </div>
