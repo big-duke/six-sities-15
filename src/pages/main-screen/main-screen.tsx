@@ -120,7 +120,7 @@ function MainScreen({ offers }: MainScreenProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <OfferCardList offers={offers} />
+              <OfferCardList offers={offers} variant='card' />
             </section>
             <div className="cities__right-section">
               <Map points={points} center={center} variant='cities' />

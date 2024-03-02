@@ -1,12 +1,19 @@
-import classNames from 'classnames';
+import { OfferRatingVariant } from './types';
 import { useOfferRating } from './use-offer-rating';
-import { OfferRatingProps } from './types';
+
+type OfferRatingProps = {
+  rating: number;
+  variant: OfferRatingVariant;
+  children?: JSX.Element;
+};
+
 
 function OfferRating({ rating, variant, children }: OfferRatingProps) {
-  const {ratingClassName, starClassName, width} = useOfferRating({rating, variant});
-  return (
-    <div className={classNames(ratingClassName, 'rating')}>
-      <div className={classNames(starClassName, 'rating__stars')}>
+  const { width, ratingClassName, starClassName } = useOfferRating({rating, variant});
+
+  return(
+    <div className={ratingClassName}>
+      <div className={starClassName}>
         <span style={{ width }} />
         <span className="visually-hidden">Rating</span>
       </div>

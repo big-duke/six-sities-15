@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from 'react';
 import { Offers } from '../../types/offer';
-import OfferCard from '../offer-card/offer-card';
+import OfferCard, { OfferVariant } from '../offer-card/offer-card';
+import { useOfferCardList } from './use-offer-card-list';
 
 type OfferCardListProps = {
   offers: Offers;
+  variant: OfferVariant;
 };
-function OfferCardList({ offers }: OfferCardListProps) {
-  const [hoverCard, setHoverCard] = useState<string | null>(null);
-  const handleHoverCard = (id: string | null) => setHoverCard(id);
+function OfferCardList({ offers , variant}: OfferCardListProps) {
+ const {className, handleHoverCard} = useOfferCardList({variant});
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={className}>
       {offers.map((offer) => (
-        <OfferCard key={offer.id} offer={offer} onCardHover={handleHoverCard} variant='card' />
+        <OfferCard key={offer.id} offer={offer} onCardHover={handleHoverCard} variant={variant} />
       ))}
     </div>
   );

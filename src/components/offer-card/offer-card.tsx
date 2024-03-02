@@ -4,7 +4,7 @@ import PremiumLabel from '../premium-label/premium-label';
 import OfferRating from '../offer-rating/offer-rating';
 import OfferPrice from '../offer-price/offer-price';
 import OfferBookmarkButton from '../offer-bookmark-button/offer-bookmark-button';
-import classNames from 'classnames';
+
 import { useOfferCard } from './useOfferCard';
 import './styles.css';
 
@@ -32,37 +32,25 @@ function OfferCard({
     isFavorite,
   } = offer;
 
-  const { url, width, height, className, onMouseEnter, onMouseLeave } =
-    useOfferCard({ id, variant, onCardHover });
-
+  const { url, articleClassName,wrapperClassName, infoClassName, onMouseEnter, onMouseLeave } = useOfferCard({ id, variant, onCardHover });
   return (
-    <article className={className}>
+    <article className={articleClassName}>
+
       <PremiumLabel isPremium={isPremium} variant="card" />
       <div
-        className={classNames(
-          'place-card__image-wrapper',
-          variant === 'card'
-            ? 'cities__image-wrapper'
-            : 'favorites__image-wrapper'
-        )}
+        className={wrapperClassName}
       >
         <Link to={url}>
           <img
             className="place-card__image"
             src={previewImage}
             alt={title}
-            width={width}
-            height={height}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
           />
         </Link>
       </div>
-      <div
-        className={classNames('place-card__info', {
-          'favorites__card-info': variant === 'favorite',
-        })}
-      >
+      <div className={infoClassName}>
         <div className="place-card__price-wrapper">
           <OfferPrice price={price} variant="card" />
           <OfferBookmarkButton isFavorite={isFavorite} variant="card" />

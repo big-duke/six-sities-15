@@ -1,15 +1,15 @@
 import { OfferRatingVariant } from './types';
 
 const variantRatingClassName = {
-  card: 'place-card__rating',
-  full: 'offer__rating',
-  review: 'reviews__rating',
+  card: 'place-card__rating rating',
+  full: 'offer__rating rating',
+  review: 'reviews__rating rating',
 };
 
 const variantStarClassName = {
-  card: 'place-card__stars',
-  full: 'offer__stars',
-  review: 'reviews__stars',
+  card: 'place-card__stars rating__stars',
+  full: 'offer__stars rating__stars',
+  review: 'reviews__stars rating__stars',
 };
 
 type OfferRatingController = {
