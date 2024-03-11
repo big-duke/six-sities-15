@@ -8,7 +8,7 @@ type OfferCardListProps = {
   variant: OfferVariant;
 };
 function OfferCardList({ offers , variant}: OfferCardListProps) {
- const {className, handleHoverCard} = useOfferCardList({variant});
+  const {className, handleHoverCard} = useOfferCardList({variant});
   return (
     <div className={className}>
       {offers.map((offer) => (

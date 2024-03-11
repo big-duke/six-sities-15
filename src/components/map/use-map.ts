@@ -10,17 +10,13 @@ type MapController = {
 export function useMap({ center, mapRef }: MapController) {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef(false);
-
+  const { latitude: lat, longitude: lng, zoom } = center;
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = leaflet.map(mapRef.current, {
-        center: {
-          lat: center.latitude,
-          lng: center.longitude,
-        },
-        zoom: center.zoom,
+        center: {lat, lng},
+        zoom,
       });
-
       leaflet
         .tileLayer(
           'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
@@ -30,11 +26,11 @@ export function useMap({ center, mapRef }: MapController) {
           }
         )
         .addTo(instance);
-
       setMap(instance);
       isRenderedRef.current = true;
     }
-  }, [center, mapRef]);
+    map?.setView({ lat , lng }, zoom);
+  }, [lat, lng, map, mapRef, zoom]);
 
   return map;
 }

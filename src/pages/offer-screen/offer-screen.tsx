@@ -13,13 +13,15 @@ import OfferBookmarkButton from '../../components/offer-bookmark-button/offer-bo
 import ReviewList from '../../components/review-list/review-list';
 import { comments } from '../../mock/comments';
 import Map from '../../components/map/map';
-import { Location } from '../../types/location';
 import OfferCardList from '../../components/offer-card-list/offer-card-list';
+import { useAppSelector } from '../../hooks/redux';
+import { CityCenter } from '../../const';
 
 function OfferScreen(): JSX.Element {
   const { id } = useParams();
   const offer = offers.find((item) => item.id === id);
-
+  const activeCity = useAppSelector((store) => store.activeCity);
+  const center = CityCenter[activeCity];
   if (!offer) {
     return <Navigate to="/offer-not-found" />;
   }
@@ -40,11 +42,7 @@ function OfferScreen(): JSX.Element {
 
   const nearByOffers = offers.filter((item) => item.id !== id);
   const nearByPoints = nearByOffers.map((item) => item.location);
-  const center: Location = {
-    latitude: 52.37454,
-    longitude: 4.897976,
-    zoom: 12,
-  };
+
   return (
     <div className="page">
       <Helmet>

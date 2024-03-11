@@ -8,6 +8,7 @@ import PageNotFoundScreen from '../../pages/page-not-found-screen/page-not-found
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { Offers } from '../../types/offer';
+import NoPlacesScreen from '../../pages/no-places-screen/no-places-screen';
 type AppProps = {
   offers: Offers;
 };
@@ -19,7 +20,7 @@ function App({ offers }: AppProps): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainScreen offers={offers} />}
+            element={<MainScreen />}
           />
           <Route path={AppRoute.Login} element={<LoginScreen />} />
           <Route
@@ -31,6 +32,7 @@ function App({ offers }: AppProps): JSX.Element {
             }
           />
           <Route path={AppRoute.Offer} element={<OfferScreen />} />
+          <Route path={AppRoute.NoPlaces} element={<NoPlacesScreen />} />
           <Route path="*" element={<PageNotFoundScreen />} />
         </Routes>
       </BrowserRouter>

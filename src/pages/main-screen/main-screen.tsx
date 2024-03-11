@@ -1,23 +1,25 @@
 import { Link } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import OfferCardList from '../../components/offer-card-list/offer-card-list';
-import { Offers } from '../../types/offer';
-import { AppRoute } from '../../const';
+import { AppRoute, CityCenter } from '../../const';
 import { Helmet } from 'react-helmet-async';
 import Map from '../../components/map/map';
-import { Location } from '../../types/location';
+import { useAppSelector } from '../../hooks/redux';
+import LocationTabs from '../../components/location-tabs/location-tabs';
+import NoPlacesScreen from '../no-places-screen/no-places-screen';
 
-type MainScreenProps = {
-  offers: Offers;
-};
+function MainScreen(): JSX.Element {
+  const activeCity = useAppSelector((store) => store.activeCity);
+  const offers = useAppSelector((store) => store.offers);
+  const offersByCity = offers.filter((offer) => offer.city.name === activeCity);
+  const points = offersByCity.map(({ location }) => location);
+  const center = CityCenter[activeCity];
+  const placeFound = `${offersByCity.length} places to stay in ${activeCity}`;
 
-function MainScreen({ offers }: MainScreenProps): JSX.Element {
-  const points = offers.map(({ location }) => location);
-  const center: Location = {
-    latitude: 52.37454,
-    longitude: 4.897976,
-    zoom: 12,
-  };
+  if (offersByCity.length === 0) {
+    return <NoPlacesScreen />;
+  }
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -53,47 +55,12 @@ function MainScreen({ offers }: MainScreenProps): JSX.Element {
       </header>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <LocationTabs />
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{placeFound}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -120,10 +87,10 @@ function MainScreen({ offers }: MainScreenProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <OfferCardList offers={offers} variant='card' />
+              <OfferCardList offers={offersByCity} variant="card" />
             </section>
             <div className="cities__right-section">
-              <Map points={points} center={center} variant='cities' />
+              <Map points={points} center={center} variant="cities" />
             </div>
           </div>
         </div>
