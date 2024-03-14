@@ -3,3 +3,5 @@ export type Location = {
   longitude: number;
   zoom: number;
 };
+
+export type Point = Omit<Location, 'zoom'> & { offerId?: string | null };

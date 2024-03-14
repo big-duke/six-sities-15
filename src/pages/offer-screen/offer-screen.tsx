@@ -14,14 +14,28 @@ import ReviewList from '../../components/review-list/review-list';
 import { comments } from '../../mock/comments';
 import Map from '../../components/map/map';
 import OfferCardList from '../../components/offer-card-list/offer-card-list';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { CityCenter } from '../../const';
+import { useEffect } from 'react';
+import { setHoverOfferId } from '../../store/action';
+import { Point } from '../../types/location';
 
 function OfferScreen(): JSX.Element {
   const { id } = useParams();
   const offer = offers.find((item) => item.id === id);
   const activeCity = useAppSelector((store) => store.activeCity);
+  const dispatch = useAppDispatch();
   const center = CityCenter[activeCity];
+
+  useEffect(() => {
+    if (id) {
+      dispatch(setHoverOfferId(id));
+    }
+    return () => {
+      dispatch(setHoverOfferId(null));
+    };
+  }, [dispatch, id]);
+
   if (!offer) {
     return <Navigate to="/offer-not-found" />;
   }
@@ -41,7 +55,10 @@ function OfferScreen(): JSX.Element {
   } = offer;
 
   const nearByOffers = offers.filter((item) => item.id !== id);
-  const nearByPoints = nearByOffers.map((item) => item.location);
+  const nearByPoints: Point[] = nearByOffers.map(({ id: offerId, location }) => ({ ...location, offerId }));
+  nearByPoints.push({...offer.location,offerId:offer.id});
+
+
 
   return (
     <div className="page">
@@ -98,15 +115,14 @@ function OfferScreen(): JSX.Element {
               <ReviewList list={comments} />
             </div>
           </div>
-          <Map points={nearByPoints} center={center} variant='offer'/>
-
+          <Map points={nearByPoints} center={center} variant="offer" />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <OfferCardList offers={nearByOffers} variant='near-places' />
+            <OfferCardList offers={nearByOffers} variant="near-places" />
           </section>
         </div>
       </main>

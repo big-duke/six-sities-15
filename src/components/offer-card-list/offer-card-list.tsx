@@ -19,3 +19,4 @@ function OfferCardList({ offers , variant}: OfferCardListProps) {
 }
 
 export default OfferCardList;
+

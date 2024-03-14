@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from 'react';
 import { OfferVariant } from '../offer-card/offer-card';
+import { useAppDispatch } from '../../hooks/redux';
+import { setHoverOfferId } from '../../store/action';
 
 type OfferCardListController= {
 
   variant: OfferVariant;
 }
 export function useOfferCardList({variant}:OfferCardListController){
-  const [hoverCard, setHoverCard] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
   const isHoverEnabled = variant === 'card';
-  const handleHoverCard = isHoverEnabled ? (id: string | null) => setHoverCard(id) : undefined;
+  const handleHoverCard = isHoverEnabled ? (id: string | null) => dispatch(setHoverOfferId(id)) : undefined;
 
   let className = '';
   switch (variant) {
